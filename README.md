@@ -50,10 +50,12 @@ nothing — 0.16ns, the compiler eliminates them entirely via `if constexpr`.
 
 GCC 14, -O3, i7-13800H:
 
+```bash
 Ring push (cross-core): 91.8 ns
 make_record + push: 26.8 ns
 Disabled level: 0.16 ns
 Push+pop same thread: 33.4 ns
+```
 
 ## Build
 
