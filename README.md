@@ -4,6 +4,7 @@ A high-performance, lock-free, asynchronous C++20 logging library built for low-
 
 ## Features
 
+- **Header-only library** — no compilation needed, just `#include` and use. No `.cpp` files to link, no build step for the library itself
 - **Lock-free MPSC ring buffer** — multiple producer threads push log records concurrently using atomic CAS operations, zero mutex overhead
 - **Async background drain** — log formatting and I/O happen on a dedicated background thread, keeping the hot path fast
 - **Compile-time level filtering** — disabled log levels are eliminated entirely by the compiler (`if constexpr`), costing 0.16ns
@@ -42,6 +43,8 @@ Comparison with popular libraries:
 Each line contains: timestamp (microsecond precision) · log level (fixed width) · thread ID (hex) · source file:line · message.
 
 ## Quick Start
+
+No build step needed — just include the headers:
 
 ```cpp
 #include "logger.hpp"
@@ -125,14 +128,26 @@ Producer threads          Ring Buffer              AsyncWorker thread
 
 ## Building
 
-Requirements: C++20 compiler (GCC 13+ or Clang 16+), CMake 3.16+, pthread.
+flashlog is a **header-only library** — no separate compilation needed. Just add `include/flashlog/` to your include path.
+
+Requirements: C++20 compiler (GCC 13+ or Clang 16+), pthread.
+
+### Using in your project
+
+```cmake
+# In your CMakeLists.txt:
+target_include_directories(your_app PRIVATE /path/to/flashlog/include/flashlog)
+target_link_libraries(your_app PRIVATE pthread)
+```
+
+### Building examples and benchmarks
 
 ```bash
 mkdir build && cd build
 cmake .. -DCMAKE_BUILD_TYPE=Release
 cmake --build .
 
-# Run tests
+# Run example
 ./flashlog_test
 
 # Run benchmarks (requires libbenchmark-dev)
