@@ -1,8 +1,7 @@
 # flashlog
 
 A fast, lock-free C++ logging library, built to understand how async 
-logging works under the hood — MPSC ring buffers, CAS, memory ordering, 
-the whole thing.
+logging works under the hood — MPSC ring buffers, CAS, memory ordering
 
 Header-only. C++20. No dependencies.
 
